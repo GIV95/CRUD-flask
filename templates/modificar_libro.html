@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar libro</title>
+    <!-- Plantillas Bootstrap-->
+    <link href="../static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="../static/bootstrap/bootstrap.min.js"></script>
+    <!--Buscadores-->
+    <script src="../static/js/buscadorCOD.js"></script>
+    <script src="../static/js/buscadorAUT.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5 text-center border border-primary p-3">
+        <h1>CRUD - CaC- Equipo 7</h1>
+        <h2>Formulario para un modificar Libro existente</h1>
+    </div>
+
+    <div class="container mt-5 border border-primary p-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <!-- Formulario para modificar el libro / Se colocan los valores originales por defecto -->
+                <form action="/modificar_libro/{{ libro['codigo']}}" method="POST">
+                    <input type="hidden" name="_method" value="PUT"> <!-- Simula el método PUT -->
+                    <div id="inputAutor" class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor:</label>
+                        <input type="text" class="form-control" name="autor" value="{{ libro['autor'] }}" required>
+                    </div>
+                    <div id="inputTitulo" class="mb-3">
+                        <label for="inputTitulo" class="form-label">Título:</label>
+                        <input type="text" class="form-control" name="titulo" value="{{ libro['titulo'] }}" required>
+                    </div>
+                    <div id="inputPortada" nclass="mb-3">
+                        <label for="inputPortada" class="form-label">Carge portada:</label>
+                        <input type="file" class="form-control" ame="portada" value="{{ libro['portada'] }}">
+                    </div>
+
+                    <!--Botones para confirmar/cancelar-->
+                    <div class="text-center">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Guardar Cambios</button>
+                            <a href="/buscarcod/{{ libro['codigo'] }}" class="btn btn-outline-danger btn-sm">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

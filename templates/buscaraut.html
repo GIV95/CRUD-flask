@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar autor</title>
+    <!-- Plantillas Bootstrap-->
+    <link href="../static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="../static/bootstrap/bootstrap.min.js"></script>
+    <!--Buscadores-->
+    <script src="../static/js/buscadorCOD.js"></script>
+    <script src="../static/js/buscadorAUT.js"></script>
+</head>
+
+<body>
+    <!-- Estructura para proyectar los datos de la DB-->
+    <h1 class="container mt-5 text-center border border-primary p-3">CRUD - CaC- Equipo 7</h1>
+    <h3 class="container mt-5 text-center border border-primary p-3">LIBRO BUSCADO</h3>
+    <!--Aqui opciones de busqueda y agregado de libros-->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <!--Volver a la tabla maestra-->
+                <div class="col-md-6 text-md-right mt-2">
+                    <a href="/listar_libros" type="button" class="btn btn-outline-primary btn-sm">Volver a tabla</a>
+                </div>
+                <!--Agregar libro-->
+                <div class="col-md-6 text-md-right mt-2">
+                    <form action="/nuevo_libro" method="GET">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">Agregar libro</button>
+                    </form>
+                </div>
+                <!--Buscar por codigo-->
+                <form id="buscarCOD" action="/buscarcod/" method="GET" class="d-inline">
+                    <div class="input-group">
+                        <input id="inputCOD" type="text" name="codigo" class="form-control"
+                            placeholder="Buscar por código...">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-success btn-sm">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                <!--Buscar por autor-->
+                <form id="buscarAUT" action="/buscaraut/" method="GET" class="d-inline">
+                    <div class="input-group">
+                        <input id="inputAUT" type="text" class="form-control" name="autor"
+                            placeholder="Buscar por autor...">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-success btn-sm">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Construcción de la tabla -->
+            <div id="TablaLibros" class="container mt-5 table-responsive border border-primary p-3">
+                <table class="table table-bordered align-middle">
+                    <thead class="text-center">
+                        <tr>
+                            <th scope="col">#ID</th>
+                            <th scope="col">AUTOR</th>
+                            <th scope="col">TÍTULO</th>
+                            <th scope="col">PORTADA</th>
+                            <th scope="col">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <!-- Se utiliza Jinja2 para listar automáticamente los libros -->
+                    {% for libro in libros %}
+                    <tbody class="text-center">
+                        <tr>
+                            <td>{{ libro['codigo'] }}</td>
+                            <td>{{ libro['autor'] }}</td>
+                            <td>{{ libro['titulo'] }}</td>
+                            <td style="max-width: 150px; max-height: 150px;">
+                                <img class="img-thumbnail imgfluid" src="{{ libro['portada'] }}"
+                                    alt="Portada del libro">
+                            </td>
+                            <!-- Primer botón deriva al formulario de modificación -->
+                            <!-- Segundo botón deriva eliminar automatico -->
+                            <td id="botones">
+                                <div class="btn-group">
+                                    <form action="/modificar_libro/{{ libro['codigo'] }}" method="GET">
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">MODIFICAR</button>
+                                    </form>
+
+                                    <a href="/eliminar_codigo/{{ libro['codigo'] }}" type="button"
+                                        class="btn btn-outline-danger btn-sm">ELIMINAR</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
